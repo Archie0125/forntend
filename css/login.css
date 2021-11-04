@@ -1,0 +1,27 @@
+:root{
+    --Cloud:#cdc9c2;
+    --Westar:#dfdad4;
+    --Sunset:#f6464b;
+    --Alizarin:#e2272d;
+    --Flamingo:#f24449;
+    --Carnation:#f55d62;
+}
+
+img{width: 80%;}
+html,body {height: 100%;}
+
+body {background:var(--Westar);}
+.text-red{color:var(--Sunset);}
+.bg-red {background:var(--Sunset);}
+.bg-pink {background:var(--Carnation);}
+.btn-red:hover{background:var(--Alizarin);}
+
+.box-shadow {box-shadow: 6px 6px 0px var(--Cloud);}
+.red-shadow {box-shadow: -3px 3px 0px var(--Flamingo);}
+
+.h-60px {height:60px;}
+.h-108px {height:108px;}
+.h-600px {height:600px;}
+
+.font-size-12px{font-size: 12px;}
+.line-height-200px{line-height: 200px;}
