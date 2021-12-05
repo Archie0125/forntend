@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>editMeeging</title>
+   
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <!-- Login CSS -->
+    <!-- <link rel="stylesheet" type="text/css" href="semantic.css"> -->
+    <link rel="stylesheet" type="text/css" href="css/login.css">
+    <link rel="stylesheet" type="text/css" href="css/navbar.css">
+
+</head>
+<body>
+    <!-- Bootstrap Navbar -->
+    <div class="w-100 bg-dark">
+        <div class="container bg-dark">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="index.html">Navbar</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="#">Admin</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="#">Invitation</a>
+                            </li>
+                        </ul>
+                        <form class="d-flex">
+                                <div class="nav-name" id="userName"></div>
+                            <button class="btn btn-outline-primary" type="submit" id="logout">logout</button>
+                        </form>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+    
+
+    <div class="modal-dialog">
+        <div class="modal-content d-flex flex-column">
+            <div>
+                <div class="modal-body">
+                    <div class="d-flex justify-content-between mx-4 my-3 flex-wrap">
+                        <span>房間名稱：<span id="room_name"></span></span>
+                        <span>會議日期：<span id="date"></span></span>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between mx-4 my-3 flex-wrap">
+                        <span>開始時間：<span id="start_time"></span></span>
+                        <span>結束時間：<span id="end_time"></span></span>
+                        </span>
+                    </div>
+                    <div class="d-flex justify-content-between mx-4 my-3 flex-wrap">
+                        <div>會議名稱：</div>
+                        <input id="meeting_name" class="w-75" type="text"> 
+                    </div>
+
+                    <div class="d-flex justify-content-between mx-4 my-3 flex-wrap">
+                        選擇邀請：
+                            <select class="h-30px p-0 mr-2 w-75" id="membersList" name="time"></select> 
+                    </div>
+                    <div class="d-flex justify-content-end mx-4 my-3 flex-wrap">
+                        <button type="button" class="btn btn-secondary py-0" id="addMan">Add</button>
+                    </div>
+
+                </div>
+                <div class="modal-footer d-flex justify-content-start  mx-4 " id="memberBox">
+                    <div id ="memberBoxEnd"></div>
+                </div>
+                <div class="modal-footer ">
+                    <button type="button" class="btn btn-dark"  onclick="closeCreate()">close</button>
+                    <button type="button" class="btn btn-primary" onclick="editMeeging()">sumit</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <footer></footer>   
+
+    <style>
+        
+    </style>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <!-- JQuery JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script src="js/navbar.js"></script>
+    <script>
+    const myMap = new Map([
+        ["08:00:00", 8],
+        ["09:00:00", 9],
+        ["10:00:00",10],
+        ["11:00:00",11],
+        ["12:00:00",12],
+        ["13:00:00",13],
+        ["14:00:00",14],
+        ["15:00:00",15],
+        ["16:00:00",16],
+        ["17:00:00",17],
+        ["18:00:00",18],
+        ["19:00:00",19],
+        ["20:00:00",20],
+        ["21:00:00",21],
+    ]);
+
+    function addMembersList(list){
+        select = document.getElementById('membersList');
+        for (var i = 0; i<list.length; i++){
+            var opt = document.createElement('option');
+            opt.value = list[i].id;
+            opt.id = "member_" + list[i].id.toString();
+            opt.innerHTML = list[i].name;
+            select.appendChild(opt);
+        }
+    }
+
+    function addTimeList(freeTime){
+        console.log(freeTime);
+        select = document.getElementById("end_time");
+        var start = ++start_time;
+        for (var i = 0; i<=freeTime.length; i++){
+            if(freeTime[i]==start){
+                var opt = document.createElement('option');
+                opt.innerHTML = start+":00";
+                opt.value = start++;
+                select.appendChild(opt);
+            }
+        }
+        var opt = document.createElement('option');
+            opt.innerHTML = start+":00";
+            opt.value = start++;
+            select.appendChild(opt);
+    }
+
+    var mySet = new Set();
+    $('#addMan').on('click',function(){
+        var id = $('#membersList').val();
+        if(mySet.has(id)){
+            alert("The members have the same.");
+        }else{
+            mySet.add(id);
+            var Dom = '<button type="button" class="btn btn-sm btn-outline-secondary"  onClick="removeMan(this.value)" value="'+id+'" id="Man_'+id+'" >'+ $('#member_' + id).text()+' <span class="text-red">X</span></button>';
+            $('#memberBoxEnd').before(Dom);
+        }
+    })
+
+    function removeMan(id){
+        mySet.delete(id);
+        $('#Man_'+id).remove();
+    }
+    
+    function reset(){
+        $.ajax({
+            url: 'https://140.118.216.40/api/user/all',
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization' : "Bearer " + localStorage.getItem("token"),
+        },
+            success: function(result){
+                addMembersList(result.data.users)
+            },
+        })
+    }
+    var day;
+    var room_id;
+    var times = [];
+    var meeting_id=localStorage.getItem("meeting_id");
+    
+
+    $(document).ready(function (){
+
+
+            $.ajax({
+                url: 'https://140.118.216.40/api/meeting/' + meeting_id,
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization' : "Bearer " + localStorage.getItem("token"),
+                },
+                statusCode: {
+                    200: function(responseObject, textStatus, jqXHR) {
+                        var meeting =responseObject.data.meeting;
+                        var start_time =myMap.get(meeting.meeting_dates[0].time);
+                        var end_time =myMap.get(meeting.meeting_dates[meeting.meeting_dates.length-1].time)+1;
+                        var members =meeting.participants;
+                        
+                        console.log( meeting);
+                        localStorage.setItem("meeting_id", id);
+                        $("#meeting_name").val(meeting.name);
+                        room_id = meeting.meeting_room.id;
+                        $("#room_name").html(meeting.meeting_room.name);
+                        day = meeting.meeting_dates[0].date;
+                        $("#date").html(day);
+                        $("#start_time").html(start_time+":00");
+                        $("#end_time").html(end_time+":00");
+                        $("#leader").html(meeting.user.name);
+                        $("#memberBox").html('<div id ="memberBoxEnd"></div>')
+                        for(var i = 0;i<meeting.meeting_dates.length;i++){
+                            times.push(myMap.get(meeting.meeting_dates[i].time));
+                        }
+                        for(var i = 0;i<members.length;i++){
+                            var id = members[i].user.id;
+                            console.log(members[i])
+                            var Dom = '<button type="button" class="btn btn-sm btn-outline-secondary"  onClick="removeMan(this.value)" value="'+id+'" id="Man_'+id+'" >'+ members[i].user.name+' <span class="text-red">X</span></button>';
+                            $("#memberBoxEnd").before(Dom);
+                            mySet.add(id);
+                        }
+                        reset()
+                    },
+                }
+            })
+        }
+    )
+                    
+    function closeCreate(){window.location.href="index.html";}
+
+    function editMeeging(){
+        var participants =[];
+        mySet.forEach(((value) => { participants.push(value);} ));
+        
+        var data = {
+            "name": $("#meeting_name").val(),
+            "meeting_room_id": room_id,
+            "date": day,
+            "times": times,
+            "participants": participants,   
+        }
+
+        $.ajax({
+            
+            url: 'https://140.118.216.40/api/meeting/' + meeting_id,
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization' : "Bearer " + localStorage.getItem("token"),
+            },
+            data: JSON.stringify(data),
+            success: function(result){
+                console.log("creater success");
+                window.location.href="index.html";
+            },
+            error: function(result){
+                console.log("error");
+                console.log(result);
+            }           
+        })
+    }
+    </script>
+</body>
+</html>

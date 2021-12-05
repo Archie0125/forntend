@@ -19,9 +19,11 @@ body {background:var(--Westar);}
 .box-shadow {box-shadow: 6px 6px 0px var(--Cloud);}
 .red-shadow {box-shadow: -3px 3px 0px var(--Flamingo);}
 
+.h-30px{height: 30px;}
 .h-60px {height:60px;}
 .h-108px {height:108px;}
 .h-600px {height:600px;}
 
 .font-size-12px{font-size: 12px;}
 .line-height-200px{line-height: 200px;}
+.outline-1{outline: 1px solid black;}

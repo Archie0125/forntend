@@ -24,8 +24,8 @@
                         <img src="img/bar.png" alt="LoginBar">
                     </div>
                     <div class="d-flex flex-column mx-4 mx-sm-5">
-                        <input type="text" class="h-60px my-3 px-4" placeholder="USERNAME...">
-                        <input type="password" class="h-60px my-3 px-4" placeholder="PASSWORD...">
+                        <input type="text" class="h-60px my-3 px-4" placeholder="E-MAIL..." id="login_email">
+                        <input type="password" class="h-60px my-3 px-4" placeholder="PASSWORD..." id="login_password">
                         <button type="button" class="h-60px my-3 bg-red text-white border-0 btn-red" id="login">LOGIN</button>
                         <div class="font-size-12px py-3">FORGOT PASSWORD OR USERNAME, 
                             <a href="#" class="text-red">
@@ -42,10 +42,10 @@
                         <img class="d-block mx-auto " src="img/register.png" alt="registerBar">
                     </div>
                     <div class="d-flex flex-column mx-4 mx-sm-5 mt-auto">
-                        <input type="text" class="h-60px my-3 px-4" placeholder="USERNAME...">
-                        <input type="text" class="h-60px my-3 px-4" placeholder="EMAIL...">
-                        <input type="text" class="h-60px my-3 px-4" placeholder="PASSWORD...">
-                        <input type="text" class="h-60px my-3 px-4" placeholder="PASSWORD RE-TYPE...">
+                        <input type="text" class="h-60px my-3 px-4" placeholder="USERNAME..." id="register_name">
+                        <input type="text" class="h-60px my-3 px-4" placeholder="EMAIL..." id="register_email">
+                        <input type="password" class="h-60px my-3 px-4" placeholder="PASSWORD..." id="register_password">
+                        <input type="password" class="h-60px my-3 px-4" placeholder="PASSWORD RE-TYPE..." id="register_confirmation">
                         <button type="button" class="h-60px my-3 bg-pink text-white border-0 btn-red red-shadow" id="register">REGISTER</button>
                     </div>
                 </div>
@@ -60,45 +60,42 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <script>
-        var data ={"email": "user7@gmail.com","password": "password7"};
-        var data2 ={
-                "name": "user7",
-                "email": "user7@gmail.com",
-                "password": "password7",
-                "password_confirmation": "password7"
-                };
+        
 
         $('#register').on('click',function(){
-            $.ajax({
-                url: 'http://140.118.216.36/api/auth/register',
-                method: 'POST',
-                headers: {'Content-Type' : 'application/json'},
-                data: JSON.stringify(data2),
-                success: function(){
-                    console.log("success");
-                },
-                error: function(){
-                    console.log("error");
-                }           
-            })
-        })
 
-        $('#login').on('click',function(){
+            var data ={
+                "name": $("#register_name").val(),
+                "email": $("#register_email").val(),
+                "password": $("#register_password").val(),
+                "password_confirmation": $("#register_confirmation").val()
+                };
+
             $.ajax({
-                url: 'http://140.118.216.40/api/auth/login',
+                url: 'https://140.118.216.40/api/auth/register',
                 method: 'POST',
                 headers: {'Content-Type' : 'application/json'},
                 data: JSON.stringify(data),
                 success: function(result){
                     console.log("success");
-                    console.log(result);
                 },
-                error: function(){
-                    console.log("error");
-                }           
             })
-            // window.location.href="index.html";
+        })
 
+        $('#login').on('click',function(){
+        var data ={"email":  $("#login_email").val(),"password":  $("#login_password").val()};
+
+            $.ajax({
+                url: 'https://140.118.216.40/api/auth/login',
+                method: 'POST',
+                headers: {'Content-Type': 'application/json',},
+                data: JSON.stringify(data),
+                success: function(result){
+                    localStorage.setItem("token", result.data.token)
+                    localStorage.setItem("datePicker", new Date().toISOString().slice(0, 10));
+                    window.location.href="index.html";
+                },
+            })
         })
         
     </script>

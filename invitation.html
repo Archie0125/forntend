@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>invitation</title>
+   
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <!-- Login CSS -->
+    <!-- <link rel="stylesheet" type="text/css" href="semantic.css"> -->
+    <link rel="stylesheet" type="text/css" href="css/login.css">
+    <link rel="stylesheet" type="text/css" href="css/navbar.css">
+
+</head>
+<body>
+    <!-- Bootstrap Navbar -->
+    <div class="w-100 bg-dark">
+        <div class="container bg-dark">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="index.html">Navbar</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="admin.html">Admin</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="invitation.html">Invitation</a>
+                            </li>
+                        </ul>
+                        <form class="d-flex">
+                            <div class="nav-name" id="userName"></div>
+                            <button class="btn btn-outline-primary" onclick="userLogout()">logout</button>
+                        </form>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+
+    <div class="container my-5">
+        <p>Type: 
+        <select id = "Type">
+            <option value="-2">全部</option>
+            <option value="-1">拒絕</option>
+            <option value="0">尚未決定</option>
+            <option value="1">接受</option>
+        </select>
+        
+        <div id="meetings">
+            <!-- create -->
+            <div id="end"></div>
+        </div>
+    </div>
+
+
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <!-- JQuery JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script src="js/navbar.js"></script>
+    <!-- <script src="semantic.js"></script> -->
+    <script>
+    $('#Type').on('input', function() {
+        localStorage.setItem("Type", $(this).val());
+        reset($(this).val());
+    });
+
+    function addMeeting(name,id,status){
+        var statusString = '<span class="text-secondary" id="'+id+'">尚未決定</span>';
+        if(status==1){ statusString = '<span class="text-success" id="'+id+'">接受</span>';}
+        if(status==-1){ statusString = '<span class="text-danger" id="'+id+'">拒絕</span>';}
+        localStorage.setItem("letter_id", id);
+
+        var Dom =   '<div class="card border-dark mb-4">\
+                        <div class="card-body">\
+                            <h5 class="card-title">'+name+'</h5>\
+                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>\
+                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>\
+                        </div>\
+                        <div class="card-footer bg-transparent border-dark">\
+                            <div class="row">\
+                                <h5 class="card-title my-2 col-12 col-sm-6">\
+                                    目前選擇狀態：'+statusString+'\
+                                </h5>\
+                                <div class="col-12 col-sm-6 d-flex justify-content-end">\
+                                    <button type="button" class="mx-3 btn btn-success" onclick="accept('+id+')">參加</button>\
+                                    <button type="button" class="btn btn-danger" onclick="reject('+id+')">拒絕</button>\
+                                </div>\
+                            </div>\
+                        </div>\
+                    </div>'
+        $("#end").before(Dom);
+    }
+
+    function reset(status){
+        $("#meetings").html('<div id ="end"></div>')
+
+        $.ajax({
+            url: 'https://140.118.216.40/api/user/participate-meetings',
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization' : "Bearer " + localStorage.getItem("token"),
+            },
+            data: status == -2 ? '':JSON.stringify({"status": status}),
+            statusCode: {
+                200: function(responseObject, textStatus, jqXHR) {
+                    console.log("200");
+                    var letters = responseObject.data.participate_meetings;
+                    console.log(letters);
+                    
+                    for(var i=0;i<letters.length;i++){
+                        addMeeting(letters[i].meeting.name,letters[i].id,letters[i].status);
+                    }
+                },
+                204: function(responseObject, textStatus, jqXHR) {
+                    console.log("204");
+                    $("#meetings").html('<h1 id ="end">沒有資料</h1>')
+                },
+            }
+        })
+    }
+
+    $(document).ready(function (){reset(-2);})
+                    
+    function accept(id){
+        console.log("accept",id);
+        updateLetter(id,1)
+        reset(localStorage.getItem("Type"))
+    }
+    function reject(id){
+        console.log("reject",id);
+        updateLetter(id,-1)
+        reset(localStorage.getItem("Type"))
+    }
+
+    function updateLetter(id,status){
+        $.ajax({
+            url: 'https://140.118.216.40/api/participant/'+ id +"/status",
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization' : "Bearer " + localStorage.getItem("token"),
+            },
+            data: JSON.stringify({"status": status}),
+        })
+    }
+    </script>
+</body>
+</html>

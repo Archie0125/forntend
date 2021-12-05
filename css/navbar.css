@@ -1,0 +1,11 @@
+.nav-name{    
+    display: block;
+    padding: .5rem 0rem;
+    color: #fff;
+    text-decoration: none;
+    padding-right: 10px;
+}
+footer{ height: 50px; }
+@media screen and (max-width:432px)  {
+    .w-75{width: 100% !important;}
+}
