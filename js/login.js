@@ -11,7 +11,7 @@ $('#register').on('click',function(){
         headers: {'Content-Type' : 'application/json'},
         data: JSON.stringify(data),
         success: function(result){
-            console.log("success");
+            swal ( "Register: success",  "success" );
         },
         error: function(result){
         var errors = result.responseJSON.data.errors;
