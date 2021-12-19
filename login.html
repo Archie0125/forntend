@@ -59,45 +59,9 @@
     <!-- JQuery JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-    <script>
-        
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    
+    <script src="js/login.js"></script>
 
-        $('#register').on('click',function(){
-
-            var data ={
-                "name": $("#register_name").val(),
-                "email": $("#register_email").val(),
-                "password": $("#register_password").val(),
-                "password_confirmation": $("#register_confirmation").val()
-                };
-
-            $.ajax({
-                url: 'https://140.118.216.40/api/auth/register',
-                method: 'POST',
-                headers: {'Content-Type' : 'application/json'},
-                data: JSON.stringify(data),
-                success: function(result){
-                    console.log("success");
-                },
-            })
-        })
-
-        $('#login').on('click',function(){
-        var data ={"email":  $("#login_email").val(),"password":  $("#login_password").val()};
-
-            $.ajax({
-                url: 'https://140.118.216.40/api/auth/login',
-                method: 'POST',
-                headers: {'Content-Type': 'application/json',},
-                data: JSON.stringify(data),
-                success: function(result){
-                    localStorage.setItem("token", result.data.token)
-                    localStorage.setItem("datePicker", new Date().toISOString().slice(0, 10));
-                    window.location.href="index.html";
-                },
-            })
-        })
-        
-    </script>
 </body>
 </html>

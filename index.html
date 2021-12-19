@@ -9,10 +9,10 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <!-- Login CSS -->
-    <!-- <link rel="stylesheet" type="text/css" href="semantic.css"> -->
     <link rel="stylesheet" type="text/css" href="css/login.css">
-    <link rel="stylesheet" type="text/css" href="css/index.css">
     <link rel="stylesheet" type="text/css" href="css/navbar.css">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
 </head>
 <body>
@@ -21,7 +21,7 @@
         <div class="container bg-dark">
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
                 <div class="container-fluid">
-                    <a class="navbar-brand" href="index.html">Navbar</a>
+                    <a class="navbar-brand" href="index.html">Home</a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
@@ -36,7 +36,7 @@
                         </ul>
                         <form class="d-flex">
                             <div class="nav-name" id="userName"></div>
-                            <button class="btn btn-outline-primary" onclick="userLogout()">logout</button>
+                            <div class="btn btn-outline-primary" onclick="userLogout()">logout</div>
                         </form>
                     </div>
                 </div>
@@ -52,15 +52,13 @@
             <div id="end"></div>
         </div>
     </div>
-
-
     
     <!-- Modal -->
     <div class="modal fade" id="roomName" data-bs-keyboard="false" tabindex="-1" aria-labelledby="roomNameLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header p-0 overflow-hidden">
-                    <img class="d-block m-0 w-100 p-0 h-100" src="img/two.jpg" alt="registerBar">
+                    <img class="d-block m-0 w-100 p-0 h-100" src="" alt="registerBar" id="room_img">
                 </div>
                 <div class="modal-body">
                     <div class="d-flex justify-content-between mx-5">
@@ -79,7 +77,7 @@
         <div class="modal-dialog">
             <div class="modal-content d-flex flex-column">
                 <div class="modal-header p-0 overflow-hidden">
-                    <img class="d-block m-0 w-100 p-0 h-100" src="img/two.jpg" alt="registerBar">
+                    <img class="d-block m-0 w-100 p-0 h-100" src="" alt="registerBar" id="room_id2">
                 </div>
                 <div>
                     <div class="modal-body">
@@ -119,180 +117,12 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <!-- JQuery JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>  
 
     <script src="js/navbar.js"></script>
-    
-    <script>
-        const myMap = new Map([
-        ["08:00:00", 8],
-        ["09:00:00", 9],
-        ["10:00:00",10],
-        ["11:00:00",11],
-        ["12:00:00",12],
-        ["13:00:00",13],
-        ["14:00:00",14],
-        ["15:00:00",15],
-        ["16:00:00",16],
-        ["17:00:00",17],
-        ["18:00:00",18],
-        ["19:00:00",19],
-        ["20:00:00",20],
-        ["21:00:00",21],
-    ]);
-
-    function addRoom(name,id){
-        var Dom =   '<div class="row p-0 mx-0 my-lg-4 my-5 "> \
-                        <a class="col-12 col-lg-2 Name text-break btn btn-outline-success rounded-0" data-bs-toggle="modal" data-bs-target="#roomName" onclick="setName(this.text)"><span class="line-clamp-3" >'+name+'</span></a>\
-                        <div class="col-12 col-lg-10 row p-0 m-0 mx-auto" id="room_'+id+'">\
-                            <button type="button" class="btn btn-outline-secondary col-lg-1 col-sm-2 col-3 time rounded-0" id="room_'+id+'_9" value="9" onclick="createMeeting(this.id,this.value)">09:00</button>\
-                            <button type="button" class="btn btn-outline-secondary col-lg-1 col-sm-2 col-3 time rounded-0" id="room_'+id+'_10" value="10" onclick="createMeeting(this.id,this.value)">10:00</button>\
-                            <button type="button" class="btn btn-outline-secondary col-lg-1 col-sm-2 col-3 time rounded-0" id="room_'+id+'_11" value="11" onclick="createMeeting(this.id,this.value)">11:00</button>\
-                            <button type="button" class="btn btn-outline-secondary col-lg-1 col-sm-2 col-3 time rounded-0" id="room_'+id+'_12" value="12" onclick="createMeeting(this.id,this.value)">12:00</button>\
-                            <button type="button" class="btn btn-outline-secondary col-lg-1 col-sm-2 col-3 time rounded-0" id="room_'+id+'_13" value="13" onclick="createMeeting(this.id,this.value)">13:00</button>\
-                            <button type="button" class="btn btn-outline-secondary col-lg-1 col-sm-2 col-3 time rounded-0" id="room_'+id+'_14" value="14" onclick="createMeeting(this.id,this.value)">14:00</button>\
-                            <button type="button" class="btn btn-outline-secondary col-lg-1 col-sm-2 col-3 time rounded-0" id="room_'+id+'_15" value="15" onclick="createMeeting(this.id,this.value)">15:00</button>\
-                            <button type="button" class="btn btn-outline-secondary col-lg-1 col-sm-2 col-3 time rounded-0" id="room_'+id+'_16" value="16" onclick="createMeeting(this.id,this.value)">16:00</button>\
-                            <button type="button" class="btn btn-outline-secondary col-lg-1 col-sm-2 col-3 time rounded-0" id="room_'+id+'_17" value="17" onclick="createMeeting(this.id,this.value)">17:00</button>\
-                            <button type="button" class="btn btn-outline-secondary col-lg-1 col-sm-2 col-3 time rounded-0" id="room_'+id+'_18" value="18" onclick="createMeeting(this.id,this.value)">18:00</button>\
-                            <button type="button" class="btn btn-outline-secondary col-lg-1 col-sm-2 col-3 time rounded-0" id="room_'+id+'_19" value="19" onclick="createMeeting(this.id,this.value)">19:00</button>\
-                            <button type="button" class="btn btn-outline-secondary col-lg-1 col-sm-2 col-3 time rounded-0" id="room_'+id+'_20" value="20" onclick="createMeeting(this.id,this.value)">20:00</button>\
-                        </div>\
-                    </div>'
-        $("#end").before(Dom);
-    }
-    
-    function info(id){
-
-        $.ajax({
-            url: 'https://140.118.216.40/api/meeting/' + id,
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization' : "Bearer " + localStorage.getItem("token"),
-            },
-            statusCode: {
-                200: function(responseObject, textStatus, jqXHR) {
-                    var meeting =responseObject.data.meeting;
-                    var start_time =myMap.get(meeting.meeting_dates[0].time);
-                    var end_time =myMap.get(meeting.meeting_dates[meeting.meeting_dates.length-1].time)+1;
-                    var members =meeting.participants;
-                    
-                    localStorage.setItem("meeting_id", id);
-                    $("#meeting_name").html(meeting.name);
-                    $("#room_name2").html(meeting.meeting_room.name);
-
-                    $("#date").html(meeting.meeting_dates[0].date);
-                    $("#start_time").html(start_time+":00");
-                    $("#end_time").html(end_time+":00");
-                    $("#leader").html(meeting.user.name);
-                    $("#memberBox").html('<div id ="memberBoxEnd"></div>')
-                    
-                    $("#function_box").html('<button type="button" class="btn btn-secondary"  data-bs-dismiss="modal" id="close_button">close</button>');
-                    
-                    if("HI~ "+meeting.user.name == $("#userName").html()){
-                        $("#close_button").before('<button type="button" class="btn btn-warning"  onclick="editMeeting()">edit</button>');
-                        $("#close_button").before('<button type="button" class="btn btn-danger"  data-bs-dismiss="modal" onclick="deleteMeeting()">delete</button>');
-                    }
-                    for(var i = 0;i<members.length;i++){
-                        $("#memberBoxEnd").before("<div class='btn btn-outline-secondary'>"+members[i].user.name+"</div>");
-                    }
-                },
-            }
-        })
-    }
-
-    $('#datePicker').on('input', function() {
-        localStorage.setItem("datePicker", $(this).val());
-        reset($(this).val());
-    });
-
-    function setName(text){$('#room_name').html(text);}
-    function createMeeting(id,value){
-        localStorage.setItem("room_id", id[5]);
-        localStorage.setItem("start_time", value);
-        localStorage.setItem("datePicker", $('#datePicker').val());
-        window.location.href="create.html";
-    }
-
-    function reset(day){
-        var box = document.getElementsByClassName('box');
-        while(box.length>0){box[0].remove();}
-
-        $.ajax({
-            url: 'https://140.118.216.40/api/meeting?date=' + day,
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization' : "Bearer " + localStorage.getItem("token"),
-            },
-            statusCode: {
-                200: function(responseObject, textStatus, jqXHR) {
-                    console.log("200");
-                    console.log(responseObject.data.meetings);
-                    
-                    meetings = responseObject.data.meetings;
-                    for(var i =0;i<meetings.length;i++ ){
-                        for(var j = 0;j<meetings[i].meeting_dates.length;j++){
-                            var item ='#room_'+meetings[i].meeting_room.id+'_'+ myMap.get(meetings[i].meeting_dates[j].time);
-                            $(item).attr("onclick", "");
-                            $(item).html( $(item).html()+'<div class="box" onclick="info(this.id)" data-bs-toggle="modal" data-bs-target="#TimeArea" id="'+meetings[i].id+'">'+meetings[i].name+'</div>');
-                        }
-                    }
-                },
-            }
-        })
-
-    }
-
-    $(document).ready(function (){
-        $.ajax({
-            url: 'https://140.118.216.40/api/meeting-room',
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization' : "Bearer " + localStorage.getItem("token"),
-        },
-            success: function(result){
-                console.log("success");
-                var rooms = result.data.meeting_rooms;
-                for(var i=0;i<rooms.length;i++){ addRoom(rooms[i].name,rooms[i].id); }
-            },
-            error: function(result){
-                console.log("error");
-            },  
-        })
-        datePicker =localStorage.getItem("datePicker");
-        $("#datePicker").val(datePicker);
-        reset(datePicker);
-    })
-
-    function deleteMeeting(){
-        alert("Are you sure to delter Meeting?")
-        var id = localStorage.getItem("meeting_id");
-
-        $.ajax({
-            url: 'https://140.118.216.40/api/meeting/' + id,
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization' : "Bearer " + localStorage.getItem("token"),
-        },
-            success: function(result){
-                console.log("success");
-                reset(localStorage.getItem("datePicker"))
-            },
-            error: function(result){
-                console.log("error");
-                console.log(result);
-            },  
-        })
-    }
-
-    function editMeeting(){
-        console.log("edit");
-        window.location.href="edit.html";
-    }
-
-    </script>
+    <script src="js/index.js"></script>
 </body>
 </html>

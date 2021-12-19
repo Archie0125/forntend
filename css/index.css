@@ -16,8 +16,24 @@
 }
 .box:hover{
     color:black;
-    background-color: #f55;
+    background-color: #ccc;
 }
+.box_9{ background-color: #ffa39e;}
+.box_10{background-color: #ff85c0;}
+.box_11{background-color: #ffa940;}
+.box_12{background-color: #b37feb;}
+
+.box_13{background-color: #ffc53d;}
+.box_14{background-color: #ff7a45;}
+.box_15{background-color: #d3f261;}
+.box_16{background-color: #85a5ff;}
+
+.box_17{background-color: #5cdbd3;}
+.box_18{background-color: #ffec3d;}
+.box_19{background-color: #69c0ff;}
+.box_20{background-color: #95de64;}
+
+
 .Name{
     height: 80px;
     background-color: #afa;
