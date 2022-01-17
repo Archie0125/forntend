@@ -40,7 +40,7 @@ function info(id, value){
     $('#room_id2').attr("src","img/room_"+(value%10)+".jpg");
 
     $.ajax({
-        url: 'https://140.118.216.40/api/meeting/' + id,
+        url: 'http://140.118.216.40/api/meeting/' + id,
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -63,11 +63,11 @@ function info(id, value){
                 $("#leader").html(meeting.user.name);
                 $("#memberBox").html('<div id ="memberBoxEnd"></div>')
                 
-                $("#function_box").html('<button type="button" class="btn btn-secondary"  data-bs-dismiss="modal" id="close_button">close</button>');
+                $("#function_box").html('<button type="button" class="btn btn-secondary"  data-bs-dismiss="modal" id="close_button">關閉</button>');
                 
                 if("HI~ "+meeting.user.name == $("#userName").html()){
-                    $("#close_button").before('<button type="button" class="btn btn-warning"  onclick="editMeeting()">edit</button>');
-                    $("#close_button").before('<button type="button" class="btn btn-danger"  data-bs-dismiss="modal" onclick="deleteMeeting()">delete</button>');
+                    $("#close_button").before('<button type="button" class="btn btn-warning"  onclick="editMeeting()">編輯</button>');
+                    $("#close_button").before('<button type="button" class="btn btn-danger"  data-bs-dismiss="modal" onclick="deleteMeeting()">刪除</button>');
                 }
                 for(var i = 0;i<members.length;i++){
                     $("#memberBoxEnd").before("<div class='btn btn-outline-secondary'>"+members[i].user.name+"</div>");
@@ -98,7 +98,7 @@ function reset(day){
     while(box.length>0){box[0].remove();}
 
     $.ajax({
-        url: 'https://140.118.216.40/api/meeting?date=' + day,
+        url: 'http://140.118.216.40/api/meeting?date=' + day,
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -128,7 +128,7 @@ $(document).ready(function (){
     flatpickr("#datePicker", {});
     
     $.ajax({
-        url: 'https://140.118.216.40/api/meeting-room',
+        url: 'http://140.118.216.40/api/meeting-room',
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -159,7 +159,7 @@ function deleteMeeting(){
         if(value){
             var id = localStorage.getItem("meeting_id");
             $.ajax({
-                url: 'https://140.118.216.40/api/meeting/' + id,
+                url: 'http://140.118.216.40/api/meeting/' + id,
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',

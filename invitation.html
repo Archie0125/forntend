@@ -19,22 +19,22 @@
         <div class="container bg-dark">
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
                 <div class="container-fluid">
-                    <a class="navbar-brand" href="index.html">Home</a>
+                    <a class="navbar-brand" href="index.html">首頁</a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                             <li class="nav-item">
-                                <a class="nav-link" aria-current="page" href="admin.html">Admin</a>
+                                <a class="nav-link" aria-current="page" href="admin.html">管理區</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" aria-current="page" href="invitation.html">Invitation</a>
+                                <a class="nav-link" aria-current="page" href="invitation.html">邀請函</a>
                             </li>
                         </ul>
                         <form class="d-flex">
                             <div class="nav-name" id="userName"></div>
-                            <div class="btn btn-outline-primary" onclick="userLogout()">logout</div>
+                            <div class="btn btn-outline-primary" onclick="userLogout()">登出</div>
                         </form>
                     </div>
                 </div>
@@ -44,7 +44,7 @@
 
 
     <div class="container my-5">
-        <p>Type: 
+        <p>類型: 
         <select id = "Type">
             <option value="-2">全部</option>
             <option value="-1">拒絕</option>
@@ -83,9 +83,7 @@
 
         var Dom =   '<div class="card border-dark mb-4">\
                         <div class="card-body">\
-                            <h5 class="card-title">'+name+'</h5>\
-                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>\
-                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>\
+                            <h5 class="card-title">會議名稱： '+name+'</h5>\
                         </div>\
                         <div class="card-footer bg-transparent border-dark">\
                             <div class="row">\
@@ -106,7 +104,7 @@
         $("#meetings").html('<div id ="end"></div>')
 
         $.ajax({
-            url: 'https://140.118.216.40/api/user/participate-meetings',
+            url: 'http://140.118.216.40/api/user/participate-meetings',
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -129,7 +127,8 @@
                 },
             },
             error: function(result){
-                swal ( "Register:" + result.responseJSON.message ,'' ,  "error" );
+                // swal ( "Register:" + result.responseJSON.message ,'' ,  "error" );
+                console.log("error", result)
             },
         })
     }
@@ -149,7 +148,7 @@
 
     function updateLetter(id,status){
         $.ajax({
-            url: 'https://140.118.216.40/api/participant/'+ id +"/status",
+            url: 'http://140.118.216.40/api/participant/'+ id +"/status",
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',

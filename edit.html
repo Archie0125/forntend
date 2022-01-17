@@ -19,22 +19,22 @@
         <div class="container bg-dark">
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
                 <div class="container-fluid">
-                    <a class="navbar-brand" href="index.html">Home</a>
+                    <a class="navbar-brand" href="index.html">首頁</a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                             <li class="nav-item">
-                                <a class="nav-link" aria-current="page" href="#">Admin</a>
+                                <a class="nav-link" aria-current="page" href="admin.html">管理區</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" aria-current="page" href="#">Invitation</a>
+                                <a class="nav-link" aria-current="page" href="invitation.html">邀請函</a>
                             </li>
                         </ul>
                         <form class="d-flex">
                             <div class="nav-name" id="userName"></div>
-                            <div class="btn btn-outline-primary" onclick="userLogout()">logout</div>
+                            <div class="btn btn-outline-primary" onclick="userLogout()">登出</div>
                         </form>
                     </div>
                 </div>
@@ -67,7 +67,7 @@
                             <select class="h-30px p-0 mr-2 w-75" id="membersList"></select> 
                     </div>
                     <div class="d-flex justify-content-end mx-4 my-3 flex-wrap">
-                        <button type="button" class="btn btn-secondary py-0" id="addMan">Add</button>
+                        <button type="button" class="btn btn-secondary py-0" id="addMan">新增</button>
                     </div>
 
                 </div>
@@ -75,8 +75,8 @@
                     <div id ="memberBoxEnd"></div>
                 </div>
                 <div class="modal-footer ">
-                    <button type="button" class="btn btn-dark"  onclick="closeCreate()">close</button>
-                    <button type="button" class="btn btn-primary" onclick="editMeeging()">submit</button>
+                    <button type="button" class="btn btn-dark"  onclick="closeCreate()">關閉</button>
+                    <button type="button" class="btn btn-primary" onclick="editMeeging()">送出</button>
                 </div>
             </div>
 

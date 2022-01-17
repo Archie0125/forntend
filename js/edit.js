@@ -49,7 +49,7 @@ var mySet = new Set();
 $('#addMan').on('click',function(){
     var id = $('#membersList').val();
     if(mySet.has(id)){
-        swal ( "The members have the same.:" , '' ,  "warning" );
+        swal ( "邀請人重複" , '' ,  "warning" );
     }else{
         mySet.add(id);
         var Dom = '<button type="button" class="btn btn-sm btn-outline-secondary"  onClick="removeMan(this.value)" value="'+id+'" id="Man_'+id+'" >'+ $('#member_' + id).text()+' <span class="text-red">X</span></button>';
@@ -64,7 +64,7 @@ function removeMan(id){
 
 function reset(){
     $.ajax({
-        url: 'https://140.118.216.40/api/user/all',
+        url: 'http://140.118.216.40/api/user/all',
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -84,7 +84,7 @@ var meeting_id=localStorage.getItem("meeting_id");
 $(document).ready(function (){
 
     $.ajax({
-        url: 'https://140.118.216.40/api/meeting/' + meeting_id,
+        url: 'http://140.118.216.40/api/meeting/' + meeting_id,
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -143,7 +143,7 @@ function editMeeging(){
 
     $.ajax({
         
-        url: 'https://140.118.216.40/api/meeting/' + meeting_id,
+        url: 'http://140.118.216.40/api/meeting/' + meeting_id,
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -152,7 +152,7 @@ function editMeeging(){
         data: JSON.stringify(data),
         success: function(result){
             swal({
-                title: "success!",
+                title: "成功",
                 type: "success"
             }).then(function() {
                 window.location = "index.html";
@@ -165,7 +165,7 @@ function editMeeging(){
             if(errors && errors.name){
                 for(var i=0;i<errors.name.length;i++){message+=errors.name[i]+"\n";}
             }
-            swal ( "Meeting Edit:" + result.responseJSON.message ,  message ,  "error" );
+            swal ( "會議編輯:" + result.responseJSON.message ,  message ,  "error" );
 
         }           
     })

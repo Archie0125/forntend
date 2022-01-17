@@ -30,7 +30,7 @@ var mySet = new Set();
 $('#addMan').on('click',function(){
     var id = $('#membersList').val();
     if(mySet.has(id)){
-        swal ( "The members have the same." , '' ,  "warning" );
+        swal ( "邀請人重複" , '' ,  "warning" );
     }else{
         mySet.add(id);
         var Dom = '<button type="button" class="btn btn-sm btn-outline-secondary"  onClick="removeMan(this.value)" value="'+id+'" id="Man_'+id+'" >'+ $('#member_' + id).text()+' <span class="text-red">X</span></button>';
@@ -48,7 +48,7 @@ function reset(){
     $("#date").html(datePicker);
 
     $.ajax({
-        url: 'https://140.118.216.40/api/user/all',
+        url: 'http://140.118.216.40/api/user/all',
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -60,7 +60,7 @@ function reset(){
     })
 
     $.ajax({
-        url: 'https://140.118.216.40/api/meeting-room/free-time?date=' + datePicker,
+        url: 'http://140.118.216.40/api/meeting-room/free-time?date=' + datePicker,
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -100,7 +100,7 @@ function createrMeeging(){
     }
 
     $.ajax({
-        url: 'https://140.118.216.40/api/meeting',
+        url: 'http://140.118.216.40/api/meeting',
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -109,7 +109,7 @@ function createrMeeging(){
         data: JSON.stringify(data),
         success: function(result){
             swal({
-                title: "success!",
+                title: "成功",
                 type: "success"
             }).then(function() {
                 window.location = "index.html";
@@ -126,7 +126,7 @@ function createrMeeging(){
                     for(var i=0;i<errors.participants.length;i++){message+=errors.participants[i]+"\n";}
                 }
             }
-            swal ( "Meeting Create:" + result.responseJSON.message ,  message ,  "error" );
+            swal ( "會議創建:" + result.responseJSON.message ,  message ,  "error" );
         }           
     })
 }

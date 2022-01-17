@@ -6,14 +6,15 @@ $('#register').on('click',function(){
         "password_confirmation": $("#register_confirmation").val()
         };
     $.ajax({
-        url: 'https://140.118.216.40/api/auth/register',
+        url: 'http://140.118.216.40/api/auth/register',
         method: 'POST',
         headers: {'Content-Type' : 'application/json'},
         data: JSON.stringify(data),
         success: function(result){
-            swal ( "Register: success",  "success" );
+            swal ( "註冊成功",  "success" );
         },
         error: function(result){
+            console.log(result);
         var errors = result.responseJSON.data.errors;
         var message = "";
         if(errors){
@@ -27,7 +28,7 @@ $('#register').on('click',function(){
                 for(var i=0;i<errors.password.length;i++){message+=errors.password[i]+"\n";}
             }
         }
-        swal ( "Register:" + result.responseJSON.message ,  message ,  "error" );
+        swal ( "註冊:" + result.responseJSON.message ,  message ,  "error" );
         }, 
     })
 })
@@ -35,7 +36,7 @@ $('#register').on('click',function(){
 $('#login').on('click',function(){
     var data ={"email":  $("#login_email").val(),"password":  $("#login_password").val()};
     $.ajax({
-        url: 'https://140.118.216.40/api/auth/login',
+        url: 'http://140.118.216.40/api/auth/login',
         method: 'POST',
         headers: {'Content-Type': 'application/json',},
         data: JSON.stringify(data),
@@ -55,7 +56,7 @@ $('#login').on('click',function(){
                 for(var i=0;i<errors.password.length;i++){message+=errors.password[i]+"\n";}
             }
         }
-        swal ( "Login:" + result.responseJSON.message ,  message ,  "error" );
+        swal ( "登入:" + result.responseJSON.message ,  message ,  "error" );
         }
     })
 })

@@ -1,24 +1,34 @@
 function removeMan(id){
     swal({
-        title: "Are you sure?",
+        title: "確定刪除嗎?",
         icon: "warning",
-        buttons: true,
+        buttons: {
+            Btn: false,
+            cancel: {
+            text: "取消",
+            visible: true
+            },
+            danger: {
+            text: "確定",
+            visible: true
+            }
+        },
         dangerMode: true,
     }).then((value) => {
         if(value){
             $.ajax({
-                url: 'https://140.118.216.40/api/user/' + id,
+                url: 'http://140.118.216.40/api/user/' + id,
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization' : "Bearer " + localStorage.getItem("token"),
                 },
                 success: function(result){
-                    swal ( "Delete Man: success",  "success" );
+                    swal ( "刪除會員成功",  "success" );
                     reset()
                 },
                 error: function(result){
-                    swal ( "Delete Man:" + result.responseJSON.message ,  "error" );
+                    swal ( "刪除會員:" + result.responseJSON.message ,  "error" );
                 }, 
             })
         }
@@ -37,7 +47,7 @@ function addRoom(name,id){
 $('#addRoom').on('click',function(){
     var data ={"name": $("#roomName").val(),};
     $.ajax({
-        url: 'https://140.118.216.40/api/meeting-room',
+        url: 'http://140.118.216.40/api/meeting-room',
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -46,7 +56,7 @@ $('#addRoom').on('click',function(){
         data: JSON.stringify(data),
 
         success: function(result){
-            swal ( "Add Room: success",  "success" );
+            swal ( "新增會議室成功",  "success" );
             reset()
         },
         error: function(result){
@@ -56,7 +66,7 @@ $('#addRoom').on('click',function(){
             if(errors && errors.name){
                 for(var i=0;i<errors.name.length;i++){message+=errors.name[i]+"\n";}
             }
-            swal ( "Add Room:" + result.responseJSON.message ,  message ,  "error" );
+            swal ( "新增會議室" + result.responseJSON.message ,  message ,  "error" );
         },  
     })
 })
@@ -64,7 +74,7 @@ $('#addRoom').on('click',function(){
 $('#editRoom').on('click',function(){
     var data ={"name": $("#newRoomName").val(),};
     $.ajax({
-        url: 'https://140.118.216.40/api/meeting-room/' + $("#RoomList").val(),
+        url: 'http://140.118.216.40/api/meeting-room/' + $("#RoomList").val(),
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -73,7 +83,7 @@ $('#editRoom').on('click',function(){
         data: JSON.stringify(data),
 
         success: function(result){
-            swal ( "Edit Room: success",  "success" );
+            swal ( "編輯會議室成功",  "success" );
             reset()
         },
         error: function(result){
@@ -83,32 +93,43 @@ $('#editRoom').on('click',function(){
             if(errors && errors.name){
                 for(var i=0;i<errors.name.length;i++){message+=errors.name[i]+"\n";}
             }
-            swal ( "Edit Room Name:" + result.responseJSON.message ,  message ,  "error" );
+            swal ( "編輯會議室:" + result.responseJSON.message ,  message ,  "error" );
         },  
     })
 })
 
 function removeRoom(id){
     swal({
-        title: "Are you sure?",
+        title: "確定刪除嗎?",
         icon: "warning",
-        buttons: true,
+
+        buttons: {
+                Btn: false,
+                cancel: {
+                text: "取消",
+                visible: true
+                },
+                danger: {
+                text: "確定",
+                visible: true
+                }
+            },
         dangerMode: true,
     }).then((value) => {
         if(value){
             $.ajax({
-                url: 'https://140.118.216.40/api/meeting-room/' + id,
+                url: 'http://140.118.216.40/api/meeting-room/' + id,
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization' : "Bearer " + localStorage.getItem("token"),
             },
                 success: function(result){
-                    swal ( "Delete Room: success",  "success" );
+                    swal ( "刪除會議室成功",  "success" );
                     reset()
                 },
                 error: function(result){
-                    swal ( "Delete Room:" + result.responseJSON.message ,  "error" );
+                    swal ( "刪除會議室:" + result.responseJSON.message ,  "error" );
                 }, 
             })
         }
@@ -122,7 +143,7 @@ function reset(){
     $("#RoomList").html('');
 
     $.ajax({
-        url: 'https://140.118.216.40/api/meeting-room',
+        url: 'http://140.118.216.40/api/meeting-room',
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -141,7 +162,7 @@ function reset(){
     })
 
     $.ajax({
-        url: 'https://140.118.216.40/api/user/all',
+        url: 'http://140.118.216.40/api/user/all',
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -165,4 +186,6 @@ function addRoomList(list){
     }
 }
 
-$(document).ready(function (){reset();})
+$(document).ready(function (){
+    reset();
+})
