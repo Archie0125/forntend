@@ -151,9 +151,20 @@ $(document).ready(function (){
 function deleteMeeting(){
 
     swal({
-        title: "Are you sure?",
+        title: "確定刪除嗎?",
         icon: "warning",
-        buttons: true,
+
+        buttons: {
+                Btn: false,
+                cancel: {
+                text: "取消",
+                visible: true
+                },
+                danger: {
+                text: "確定",
+                visible: true
+                }
+            },
         dangerMode: true,
     }).then((value) => {
         if(value){
@@ -166,7 +177,7 @@ function deleteMeeting(){
                     'Authorization' : "Bearer " + localStorage.getItem("token"),
             },
                 success: function(result){
-                    console.log("success");
+                    swal ( "刪除會議成功",  "success" );
                     reset(localStorage.getItem("datePicker"))
                 },
                 error: function(result){

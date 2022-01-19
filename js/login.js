@@ -11,7 +11,7 @@ $('#register').on('click',function(){
         headers: {'Content-Type' : 'application/json'},
         data: JSON.stringify(data),
         success: function(result){
-            swal ( "註冊成功",  "success" );
+            swal ( "註冊成功","",  "success" );
         },
         error: function(result){
             console.log(result);
